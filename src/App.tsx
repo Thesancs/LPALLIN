@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { LazyMotion, domMax } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { InfiniteGrid } from './components/ui/infinite-grid-integration';
 
 // Lazy load sections below the fold
 const Marquee = lazy(() => import('./components/Marquee').then(m => ({ default: m.Marquee })));
@@ -16,28 +17,6 @@ const FAQ = lazy(() => import('./components/FAQ').then(m => ({ default: m.FAQ })
 const CTAFinal = lazy(() => import('./components/CTAFinal').then(m => ({ default: m.CTAFinal })));
 const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
 
-const useTheme = () => {
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved as 'dark' | 'light';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
-
-  return { theme, toggleTheme };
-};
-
 const SectionLoader = () => (
   <div className="w-full h-32 flex items-center justify-center">
     <div className="w-8 h-8 border-4 border-cyan-primary/20 border-t-cyan-primary rounded-full animate-spin" />
@@ -45,14 +24,17 @@ const SectionLoader = () => (
 );
 
 export default function App() {
-  const { theme, toggleTheme } = useTheme();
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   return (
     <LazyMotion features={domMax}>
-      <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 selection:bg-cyan-primary selection:text-black">
-        <Navbar theme={theme} toggleTheme={toggleTheme} />
-        <Hero theme={theme} />
-        
+      <div className="min-h-screen bg-black text-white selection:bg-cyan-primary selection:text-black">
+        <InfiniteGrid />
+        <Navbar />
+        <Hero />
+
         <Suspense fallback={<SectionLoader />}>
           <Marquee />
           <AvisoSection />
@@ -64,7 +46,7 @@ export default function App() {
           <Depoimentos />
           <FAQ />
           <CTAFinal />
-          <Footer theme={theme} />
+          <Footer />
         </Suspense>
       </div>
     </LazyMotion>

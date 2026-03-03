@@ -37,14 +37,20 @@ const Typewriter = () => {
 
 export const QuemSomos = () => {
   return (
-    <section id="quem-somos" className="py-24 bg-black">
+    <section id="quem-somos" className="py-24 bg-black relative z-20">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
           <span className="text-cyan-primary font-bold tracking-widest text-sm uppercase mb-4 block">Quem Somos</span>
           <h2 className="text-4xl md:text-6xl font-bold mb-8 flex flex-wrap items-center justify-center gap-y-4 text-white">
             Um novo jeito de <Typewriter /> na sua empresa
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -60,7 +66,7 @@ export const QuemSomos = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.02 }}
                 className="p-8 glass rounded-3xl border-red-500/40 shadow-[0_0_30px_rgba(239,68,68,0.15)] hover:shadow-[0_0_50px_rgba(239,68,68,0.25)] transition-all"
               >
@@ -73,7 +79,7 @@ export const QuemSomos = () => {
                   <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-red-500" /> Implementação solta</li>
                 </ul>
               </motion.div>
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.02 }}
                 className="p-8 glass rounded-3xl border-cyan-primary/40 shadow-[0_0_30px_rgba(0,242,255,0.15)] hover:shadow-[0_0_50px_rgba(0,242,255,0.25)] transition-all"
               >

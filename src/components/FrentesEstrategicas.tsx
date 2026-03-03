@@ -25,30 +25,44 @@ export const FrentesEstrategicas = () => {
   ];
 
   return (
-    <section className="py-24 bg-black">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16 text-center">
-          <span className="text-cyan-primary font-bold tracking-widest text-sm uppercase mb-4 block">3 FRENTES ESTRATÉGICAS</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Como ajudamos sua empresa</h2>
-        </div>
+    <>
+      {/* Smooth transition from black section above */}
+      <div className="h-32 w-full bg-gradient-to-b from-black to-white relative z-20 pointer-events-none" />
+      <section className="py-12 pb-24 bg-white relative z-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-16 text-center"
+          >
+            <span className="text-cyan-bold font-bold tracking-widest text-sm uppercase mb-4 block">3 FRENTES ESTRATÉGICAS</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-black">Como ajudamos sua empresa</h2>
+          </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {frentes.map((f, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -10 }}
-              className="glass p-10 rounded-3xl border-white/5 hover:border-cyan-primary/30 transition-all text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-cyan-primary/10 flex items-center justify-center text-cyan-primary mb-8 mx-auto">
-                {f.icon}
-              </div>
-              <h4 className="text-2xl font-bold mb-2 text-white">{f.title}</h4>
-              <p className="text-cyan-primary text-sm font-bold mb-4 uppercase tracking-wider">{f.subtitle}</p>
-              <p className="text-white font-medium leading-relaxed">{f.desc}</p>
-            </motion.div>
-          ))}
+          <div className="grid md:grid-cols-3 gap-8">
+            {frentes.map((f, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                whileHover={{ y: -10 }}
+                className="bg-zinc-50 p-10 rounded-[2rem] border border-zinc-200 hover:border-cyan-bold/50 transition-all text-center shadow-sm hover:shadow-xl"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-cyan-bold/10 flex items-center justify-center text-cyan-bold mb-8 mx-auto">
+                  {f.icon}
+                </div>
+                <h4 className="text-2xl font-bold mb-2 text-black">{f.title}</h4>
+                <p className="text-cyan-bold text-sm font-bold mb-4 uppercase tracking-wider">{f.subtitle}</p>
+                <p className="text-zinc-600 font-medium leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };

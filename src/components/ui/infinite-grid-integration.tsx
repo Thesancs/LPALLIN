@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { 
-  motion, 
-  useMotionValue, 
-  useMotionTemplate, 
-  useAnimationFrame 
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  motion,
+  useMotionValue,
+  useMotionTemplate,
+  useAnimationFrame
 } from "motion/react";
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -35,7 +35,7 @@ const GridPattern = ({ offsetX, offsetY, size }: { offsetX: any; offsetY: any; s
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
-            className="text-cyan-primary/60" 
+            className="text-cyan-primary/60"
           />
         </motion.pattern>
       </defs>
@@ -50,23 +50,27 @@ const GridPattern = ({ offsetX, offsetY, size }: { offsetX: any; offsetY: any; s
  */
 export const InfiniteGrid = ({ className }: { className?: string }) => {
   const gridSize = 40;
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Track mouse position with Motion Values for performance (avoids React re-renders)
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  // Track mouse position globally for full-page interaction
+  const mouseX = useMotionValue(-1000); // Start off-screen
+  const mouseY = useMotionValue(-1000);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top } = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
-  };
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // For fixed orientation, clientX and clientY are what we want
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
 
   // Grid offsets for infinite scroll animation
   const gridOffsetX = useMotionValue(0);
   const gridOffsetY = useMotionValue(0);
 
-  const speedX = 0.5; 
+  const speedX = 0.5;
   const speedY = 0.5;
 
   useAnimationFrame(() => {
@@ -82,20 +86,18 @@ export const InfiniteGrid = ({ className }: { className?: string }) => {
 
   return (
     <div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
       className={cn(
-        "absolute inset-0 w-full h-full overflow-hidden bg-transparent pointer-events-auto",
+        "fixed inset-0 w-full h-full overflow-hidden bg-transparent pointer-events-none z-0",
         className
       )}
     >
       {/* Layer 1: Subtle background grid (always visible) */}
-      <div className="absolute inset-0 z-0 opacity-[0.3]">
+      <div className="absolute inset-0 z-0 opacity-[0.2]">
         <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} size={gridSize} />
       </div>
 
       {/* Layer 2: Highlighted grid (revealed by mouse mask) */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 z-0 opacity-100"
         style={{ maskImage, WebkitMaskImage: maskImage }}
       >
@@ -104,9 +106,10 @@ export const InfiniteGrid = ({ className }: { className?: string }) => {
 
       {/* Decorative Blur Spheres */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute right-[-20%] top-[-20%] w-[40%] h-[40%] rounded-full bg-cyan-primary/10 blur-[120px]" />
-        <div className="absolute left-[-10%] bottom-[-20%] w-[40%] h-[40%] rounded-full bg-cyan-primary/5 blur-[120px]" />
+        <div className="absolute right-[-10%] top-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-primary/10 blur-[120px]" />
+        <div className="absolute left-[-5%] bottom-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-primary/5 blur-[120px]" />
       </div>
     </div>
   );
 };
+

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export const InteractiveSphere = ({ theme }: { theme: 'dark' | 'light' }) => {
+export const InteractiveSphere = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -19,12 +19,10 @@ export const InteractiveSphere = ({ theme }: { theme: 'dark' | 'light' }) => {
 
     const particles: any[] = [];
     const isMobile = window.innerWidth < 768;
-    const numParticles = isMobile ? 1500 : 4500; 
+    const numParticles = isMobile ? 1500 : 4500;
     const sphereRadius = Math.min(width, height) * 0.4;
 
-    const colors = theme === 'dark' 
-      ? ['#ffffff', '#e0f7fa', '#00f2ff', '#00d8e6', '#008c99']
-      : ['#000000', '#008c99', '#00f2ff', '#00d8e6', '#005f6b'];
+    const colors = ['#ffffff', '#e0f7fa', '#00f2ff', '#00d8e6', '#008c99'];
 
     for (let i = 0; i < numParticles; i++) {
       const u = Math.random();
@@ -97,7 +95,7 @@ export const InteractiveSphere = ({ theme }: { theme: 'dark' | 'light' }) => {
           let dx = mouse.x - projX;
           let dy = mouse.y - projY;
           let dist = Math.sqrt(dx * dx + dy * dy);
-          const influenceRadius = 60; 
+          const influenceRadius = 60;
           if (mouse.active && dist < influenceRadius) {
             const force = (influenceRadius - dist) / influenceRadius;
             const angle = Math.atan2(dy, dx);
@@ -159,7 +157,7 @@ export const InteractiveSphere = ({ theme }: { theme: 'dark' | 'light' }) => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleMouseMove);
     };
-  }, [theme]);
+  }, []);
 
   return (
     <div ref={containerRef} className="w-full h-full flex items-center justify-center pointer-events-none z-0 overflow-hidden">

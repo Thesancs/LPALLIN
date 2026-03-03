@@ -1,9 +1,12 @@
 import React from 'react';
 
 export const Marquee = () => {
-  const items = ["+200M FATURADOS COM NOSSOS CLIENTES", "+10 ANOS DE MERCADO", "+3 MIL HORAS ECONOMIZADAS"];
+  const items = ["+200M FATURADOS COM NOSSOS CLIENTES", "+10 ANOS DE MERCADO", "+30 MIL HORAS ECONOMIZADAS DOS NOSSOS CLIENTES"];
   return (
-    <div className="relative py-32 overflow-hidden bg-white dark:bg-black">
+    <div className="relative py-32 overflow-hidden z-20">
+      {/* Subtle fade to black at the bottom for smooth transition to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-black/0 to-black z-20 pointer-events-none" />
+
       {/* First Band - Cyan */}
       <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-16 bg-cyan-primary -rotate-3 flex items-center overflow-hidden border-y border-black/20 z-10 shadow-[0_10px_30px_rgba(0,242,255,0.3)]">
         <div className="flex animate-marquee">

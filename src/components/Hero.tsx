@@ -2,13 +2,11 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { InteractiveSphere } from './InteractiveSphere';
-import { InfiniteGrid } from './ui/infinite-grid-integration';
 
-export const Hero = ({ theme }: { theme: 'dark' | 'light' }) => {
+export const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-24 lg:pt-32 overflow-hidden bg-black">
-      {/* Background Effect */}
-      <InfiniteGrid className="opacity-80" />
+    <section className="relative min-h-screen flex items-center pt-24 lg:pt-32 overflow-hidden bg-transparent">
+      {/* Background Effect removed, now global */}
 
       <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 w-full">
         {/* Text Container */}
@@ -25,10 +23,13 @@ export const Hero = ({ theme }: { theme: 'dark' | 'light' }) => {
             A All In Business Intelligence transforma gargalos em um sistema com IA estratégico, rentável e executável. Clareza no problema. Precisão na solução.
           </p>
           <div className="flex flex-col lg:flex-row items-center gap-6">
-            <button className="group px-10 py-5 rounded-full bg-cyan-primary text-black font-bold text-xl flex items-center gap-2 hover:scale-105 transition-transform shadow-[0_0_30px_rgba(0,242,255,0.3)]">
+            <a
+              href="#aviso"
+              className="group px-10 py-5 rounded-full bg-cyan-primary text-black font-bold text-xl flex items-center gap-2 hover:scale-105 transition-transform shadow-[0_0_30px_rgba(0,242,255,0.3)] animate-pulse-glow"
+            >
               Quero mais informações
               <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
           </div>
           <div className="flex items-center gap-4 mt-8 text-sm font-medium text-white/40">
             <a href="#metodologia" className="hover:text-cyan-primary transition-colors">Metodologia</a>
@@ -41,7 +42,7 @@ export const Hero = ({ theme }: { theme: 'dark' | 'light' }) => {
 
         {/* Sphere Container - Now on the right for desktop */}
         <div className="w-full lg:w-1/2 h-[350px] md:h-[500px] lg:h-[600px]">
-          <InteractiveSphere theme={theme} />
+          <InteractiveSphere />
         </div>
       </div>
     </section>

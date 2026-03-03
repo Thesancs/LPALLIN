@@ -29,7 +29,7 @@ export const FAQ = () => {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-black">
+    <section id="faq" className="py-24 bg-transparent">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-16">
           <span className="text-cyan-primary font-bold tracking-widest text-sm uppercase mb-4 block">FAQ</span>
@@ -39,7 +39,7 @@ export const FAQ = () => {
         <div className="space-y-4">
           {faqs.map((faq, i) => (
             <div key={i} className="glass rounded-2xl border-white/10 overflow-hidden">
-              <button 
+              <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full p-6 text-left flex justify-between items-center hover:bg-white/5 transition-colors"
               >
